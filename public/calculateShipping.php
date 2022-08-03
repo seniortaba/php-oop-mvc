@@ -2,10 +2,11 @@
 
 class Product
 {
-    private $weight;
     private $price;
+    private $weight;
+    private $freeShipping = false;
 
-    public function __construct($weight, $price)
+    public function __construct($price, $weight)
     {
         $this->weight = $weight;
         $this->price = $price;
@@ -15,23 +16,28 @@ class Product
     {
         return $this->weight;
     }
+
+    public function setFreeShipping()
+    {
+        $this->freeShipping = true;
+    }
+
+    public function getFreeShipping()
+    {
+        return $this->freeShipping;
+    }
 }
 
 class Shipping
 {
     private $totalShipping;
     private $products;
+
     private $pricePerKilogram;
-    private $shippingProvider;
 
     public function __construct($pricePerKilogram)
     {
         $this->pricePerKilogram = $pricePerKilogram;
-    }
-
-    public function shippingCalculate($weight, $shippingPrice)
-    {
-        return $weight * $shippingPrice;
     }
 
     public function addProduct(Product $product)
@@ -39,10 +45,11 @@ class Shipping
         $this->products[] = $product;
     }
 
-    public function totalProductsShipping()
+    public function calculateTotalShipping()
     {
-        foreach ($this->products as $product){
-            $this->totalShipping += $product->getWeight() * $this->pricePerKilogram;
+        foreach($this->products as $product){
+            if(!$product->getFreeShipping())
+                $this->totalShipping = $product->getWeight() * $this->pricePerKilogram;
         }
     }
 
@@ -51,15 +58,15 @@ class Shipping
         return $this->totalShipping;
     }
 
-
 }
 
-$product = new Product(2,4);
 
 $pricePerKilogram = 5;
+$product = new Product(1,1);
+
 $shipping = new Shipping($pricePerKilogram);
 $shipping->addProduct($product);
-$shipping->totalProductsShipping();
 
-$price = $shipping->getTotalShippingPrice();
-var_dump($price);
+$shipping->calculateTotalShipping();
+$totalShippingPrice = $shipping->getTotalShippingPrice();
+var_dump($totalShippingPrice);
