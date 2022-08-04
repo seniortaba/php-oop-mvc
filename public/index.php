@@ -1,16 +1,20 @@
 <?php
+session_start();
+
 $section = $_GET['section'] ?? $_POST['section'] ?? 'home';
-$action = $_GET['action'] ?? $_POST['action']?? 'show';
+$action = $_GET['action'] ?? $_POST['action'] ?? 'default';
+
 if ($section == 'about-us') {
-    include 'Controllers/aboutUsPage.php';
-} elseif($section === 'contact-us') {
+    include_once 'Controllers/contactPage.php';
+    $aboutUsController = new AboutUsController();
+    $aboutUsController->runAction($action);
+} elseif ($section === 'contact-us') {
     include_once 'Controllers/contactPage.php';
     $contactController = new contactController();
-    if($action === 'show')
-        $contactController->showAction();
-    if($action === 'submit')
-        $contactController->submitAction();
-}else {
-    include 'Controllers/homePage.php';
+    $contactController->runAction($action);
+} else {
+    include_once 'Controllers/homePage.php';
+    $homePageController = new HomePageController();
+    $homePageController->runAction($action);
 }
 

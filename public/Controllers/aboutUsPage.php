@@ -1,2 +1,10 @@
 <?php
-    include 'Views/about-us.html';
+include_once 'src/Controller.php';
+
+class AboutUsController extends Controller
+{
+    function defaultAction()
+    {
+        include 'Views/about-us.html';
+    }
+}
