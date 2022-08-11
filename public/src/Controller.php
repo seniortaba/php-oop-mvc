@@ -4,7 +4,6 @@ class Controller
 {
     function runAction($actionName)
     {
-        echo 'inside in Controller::runAction';
         if(method_exists($this, 'runBeforeAction')){
             $result = $this->runBeforeAction();
             if($result === false){
@@ -16,7 +15,7 @@ class Controller
         if(method_exists($this, $actionName)){
             $this->$actionName();
         }else{
-            include_once 'Views/status-page/404.html';
+            include_once 'view/status-page/404.html';
         }
     }
 }
