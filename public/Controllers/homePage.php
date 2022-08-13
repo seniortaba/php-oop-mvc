@@ -5,7 +5,9 @@ class HomePageController extends Controller
 {
     public function defaultAction()
     {
-        $pageObj = new Page;
+        $dbh = Database::getInstance();
+        $dbc = $dbh->getConnection();
+        $pageObj = new Page($dbc);
         $pageObj->findById(1);
         $variables['pageObj'] = $pageObj;
         $template = new Template('default');

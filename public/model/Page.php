@@ -6,21 +6,17 @@ class Page
     public string $title;
     public string $content;
 
+    private $dbc;
+
+    public function __construct($dbc)
+    {
+        $this->dbc = $dbc;
+    }
+
     public function findById($id)
     {
-        $dsn = "mysql:host=localhost;dbname=php-oop-mvc";
-        $user = "root";
-        $password = "root";
-
-        try{
-            $dbh = new PDO($dsn, $user, $password);
-        }catch(PDOException $e){
-            echo "Connection Failed: ". $e->getMessage() .'</br>';
-            die();
-        }
-
         $sql = "SELECT * FROM pages WHERE id = :id";
-        $stmt = $dbh->prepare($sql);
+        $stmt = $this->dbc->prepare($sql);
         $stmt->execute(['id' => $id]);
         $pageData = $stmt->fetch();
         $this->id = $pageData['id'];

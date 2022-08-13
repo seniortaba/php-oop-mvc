@@ -5,7 +5,11 @@ define('VIEW_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARAT
 
 require_once ROOT_PATH . 'src/Controller.php';
 require_once ROOT_PATH . 'src/Template.php';
+require_once ROOT_PATH . 'src/Database.php';
 require_once ROOT_PATH . 'model/Page.php';
+
+Database::connect('localhost', 'php-oop-mvc', 'root', 'root');
+
 
 $section = $_GET['section'] ?? $_POST['section'] ?? 'home';
 $action = $_GET['action'] ?? $_POST['action'] ?? 'default';
