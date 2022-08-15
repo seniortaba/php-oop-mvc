@@ -15,7 +15,7 @@ $section = $_GET['section'] ?? $_POST['section'] ?? 'home';
 $action = $_GET['action'] ?? $_POST['action'] ?? 'default';
 
 if ($section == 'about-us') {
-    include_once ROOT_PATH . 'Controllers/aboutUsPage.php';
+    include_once ROOT_PATH . 'Controllers/AboutUsController.php';
     $aboutUsController = new AboutUsController();
     $aboutUsController->runAction($action);
 } elseif ($section === 'contact-us') {

@@ -7,8 +7,13 @@ class contactController extends Controller
     function runBeforeAction()
     {
         if($_SESSION['has_submitted_the_form'] ?? 0 == 1){
-            $variables['title'] = "Thank contacted us already";
-            $variables['content'] = "We will get back very soon";
+
+            $dbh = Database::getInstance();
+            $dbc = $dbh->getConnection();
+
+            $pageObj = new Page($dbc);
+            $pageObj->findById(4);
+            $variables['pageObj'] = $pageObj;
 
             $template = new Template('default');
             $template->view('static-page', $variables);
@@ -20,16 +25,26 @@ class contactController extends Controller
 
     function defaultAction()
     {
-        $variables['title']="Contact us page";
-        $variables['content']="Write us a message";
+        $dbh = Database::getInstance();
+        $dbc = $dbh->getConnection();
+
+        $pageObj = new Page($dbc);
+        $pageObj->findById(3);
+        $variables['pageObj'] = $pageObj;
+
         $template = new Template('default');
-        $template->view('contact/contact-us', $variables);
+        $template->view('static-page', $variables);
     }
 
     function submitContactFormAction()
     {
-        $variables['title']="Thank you for message";
-        $variables['content']="We will get back soon";
+        $dbh = Database::getInstance();
+        $dbc = $dbh->getConnection();
+
+        $pageObj = new Page($dbc);
+        $pageObj->findById(5);
+        $variables['pageObj'] = $pageObj;
+
         $template = new Template('default');
         $template->view('static-page', $variables);
 
